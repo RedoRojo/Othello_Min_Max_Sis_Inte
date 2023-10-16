@@ -1,6 +1,7 @@
 from utils.board import Board
 from utils.colors import Colors
 from utils.minimax import find_best_move
+from utils.minimax import min_max_alpha_beta_h
 import pygame
 
 pygame.init()
@@ -28,23 +29,23 @@ class Application:
         pygame.display.set_caption("Othello/Reversi")
 
         # image initialisations
-        self.boardIMG = [pygame.image.load("images/Dark-Mode/Othello_Black_Side_Board.png"),
-                        pygame.image.load("images/Light-Mode/Othello_Black_Side_Board.png")]
+        self.boardIMG = [pygame.image.load("../images/Dark-Mode/Othello_Black_Side_Board.png"),
+                        pygame.image.load("../images/Light-Mode/Othello_Black_Side_Board.png")]
 
-        self.endScreenBlackIMG = [pygame.image.load("images/Dark-Mode/End_Screen_Black.png"), 
-                                pygame.image.load("images/Light-Mode/End_Screen_Black.png")]
-        self.endScreenWhiteIMG = [pygame.image.load("images/Dark-Mode/End_Screen_White.png"), 
-                                pygame.image.load("images/Light-Mode/End_Screen_White.png")]
-        self.endScreenDrawIMG = [pygame.image.load("images/Dark-Mode/End_Screen_Draw.png"), 
-                                pygame.image.load("images/Light-Mode/End_Screen_Draw.png")]
-        self.endPromptIMG  = [pygame.image.load("images/Dark-Mode/End_Prompt.png"), 
-                                pygame.image.load("images/Light-Mode/End_Prompt.png")]
+        self.endScreenBlackIMG = [pygame.image.load("../images/Dark-Mode/End_Screen_Black.png"), 
+                                pygame.image.load("../images/Light-Mode/End_Screen_Black.png")]
+        self.endScreenWhiteIMG = [pygame.image.load("../images/Dark-Mode/End_Screen_White.png"), 
+                                pygame.image.load("../images/Light-Mode/End_Screen_White.png")]
+        self.endScreenDrawIMG = [pygame.image.load("../images/Dark-Mode/End_Screen_Draw.png"), 
+                                pygame.image.load("../images/Light-Mode/End_Screen_Draw.png")]
+        self.endPromptIMG  = [pygame.image.load("../images/Dark-Mode/End_Prompt.png"), 
+                                pygame.image.load("../images/Light-Mode/End_Prompt.png")]
 
-        self.choiceIMG = [pygame.image.load("images/Dark-Mode/Othello_Game-mode_Choice.png"),
-                          pygame.image.load("images/Light-Mode/Othello_Game-mode_Choice.png")]
+        self.choiceIMG = [pygame.image.load("../images/Dark-Mode/Othello_Game-mode_Choice.png"),
+                          pygame.image.load("../images/Light-Mode/Othello_Game-mode_Choice.png")]
 
         # font initialisation
-        self.discCountFont = pygame.font.Font("Gotham-Font/GothamLight.ttf", 40)
+        self.discCountFont = pygame.font.Font("../Gotham-Font/GothamLight.ttf", 40)
 
         self.single_player = False
         self.displayed_choice = False
@@ -179,6 +180,7 @@ class Application:
             return
         
         possible_moves = self.game_board.all_legal_moves(self.turn)
+        print(possible_moves)
         if not possible_moves:
             self.shown_moves = False
             self.turn *= -1
@@ -221,7 +223,8 @@ class Application:
     def computerPlayerTurn(self) -> None:
         '''Code to run when it is computer player's turn.'''
         
-        r, c = find_best_move(self.game_board)
+        # r, c = find_best_move(self.game_board)
+        r, c = min_max_alpha_beta_h(self.game_board, 'min', 3)
         self.shown_moves = False
         
         if (r,c) == (20, 20):
