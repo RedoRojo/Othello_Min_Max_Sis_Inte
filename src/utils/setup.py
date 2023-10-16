@@ -224,6 +224,11 @@ class Application:
         '''Code to run when it is computer player's turn.'''
         
         # r, c = find_best_move(self.game_board)
+        if(len(self.game_board.all_legal_moves(self.game_board.WHITE)) == 0):
+            print("no hay movmientos posibles")
+            self.turn *= -1
+            return 
+        
         r, c = min_max_alpha_beta_h(self.game_board, 'min', 3)
         self.shown_moves = False
         

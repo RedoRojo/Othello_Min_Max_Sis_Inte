@@ -26,9 +26,12 @@ def result(state, coord, player):
     return action(state, coord, player)
 
 def min_max_alpha_beta_h(state, player, limit):
+    # print(f"jugador: {player}")
+    # print(state.board)
     if(player == "max"): 
         v = []
         actions = state.all_legal_moves(state.BLACK)
+        # print(actions)
         actions = list(actions)
         for a in actions: 
             sucessor = result(state.board, a, player)
@@ -43,6 +46,7 @@ def min_max_alpha_beta_h(state, player, limit):
     elif player == 'min': 
         v = []
         actions = state.all_legal_moves(state.WHITE)
+        # print(actions)
         actions = list(actions)
         for a in actions.copy(): 
             sucessor = result(state.board, a, player)
